@@ -42,6 +42,14 @@ function App() {
             }
           >
             <Route
+              index
+              element={
+                <LazyPageWrapper>
+                  <StandardCategoryForm />
+                </LazyPageWrapper>
+              }
+            />
+            <Route
               path="standard"
               element={
                 <LazyPageWrapper>

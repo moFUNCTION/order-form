@@ -1,5 +1,5 @@
 import { Stack } from "@chakra-ui/react";
-import { Header } from "./Parts/PCB_Selection/Header";
+import { Header } from "./Parts/PCB_Selection/Parts/Header";
 import { PCB_Selection_Form } from "./Parts/PCB_Selection/PCB_Selection_Form";
 import { useForm } from "react-hook-form";
 export default function Index() {
