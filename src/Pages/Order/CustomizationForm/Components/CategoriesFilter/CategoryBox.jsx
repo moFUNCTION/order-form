@@ -1,23 +1,29 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Image } from "@chakra-ui/react";
 import React from "react";
 import { IoCheckmark } from "react-icons/io5";
-export const ButtonStyled = ({ children, isActive, ...rest }) => {
+import { Link, useLocation } from "react-router-dom";
+
+export const CategoryBox = ({ href, image, title }) => {
+  const { pathname } = useLocation();
   return (
     <Button
-      colorScheme={isActive && "green"}
+      colorScheme="green"
       variant="outline"
-      bgColor={isActive ? "green.50" : "white"}
-      size="lg"
-      {...rest}
+      bgColor={pathname === href ? "green.50" : "white"}
+      w="fit-content"
+      h="fit-content"
+      maxW="400px"
+      gap="4"
+      paddingBlock="2"
+      as={Link}
+      to={href}
       pos="relative"
-      zIndex="1"
-      _hover={{
-        borderColor: "green.500",
-      }}
       overflow="hidden"
+      flexGrow="1"
     >
-      {children}
-      {isActive && (
+      <Image src={image} w="50px" h="50px" objectFit="contain" />
+      {title}
+      {pathname === href && (
         <Box
           pos="absolute"
           _before={{
@@ -33,6 +39,7 @@ export const ButtonStyled = ({ children, isActive, ...rest }) => {
           }}
           bottom="0px"
           right="0px"
+          zIndex="100"
         >
           <IoCheckmark
             style={{
