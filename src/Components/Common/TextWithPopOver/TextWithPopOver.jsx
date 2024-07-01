@@ -15,11 +15,16 @@ import {
 } from "@chakra-ui/react";
 import { CiCircleQuestion } from "react-icons/ci";
 
-export const TextWithPopOver = ({ title, children, popOverHeader }) => {
+export const TextWithPopOver = ({
+  title,
+  children,
+  popOverHeader,
+  ...rest
+}) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <Flex alignItems="center" gap="2">
+        <Flex {...rest} alignItems="center" gap="2">
           <Tooltip label="click here to show data">
             <Text gap="2">{title}</Text>
           </Tooltip>

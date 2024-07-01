@@ -6,10 +6,10 @@ export default function Index() {
   const formReturnedValues = useForm();
   return (
     <Stack
+      overflow="hidden"
       border="1px"
       borderColor="gray.500"
       w="100%"
-      minH="600px"
       borderRadius="md"
     >
       <PCB_Selection_Form />

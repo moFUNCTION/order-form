@@ -9,6 +9,7 @@ import { Layers } from "./Parts/Layers";
 import { CopperLayer } from "./Parts/CopperLayer";
 import { SolderMask } from "./Parts/SolderMask";
 import { Silkscreen } from "./Parts/Silkscreen";
+import { MaterialType } from "./Parts/MaterialType";
 
 export const PCB_Selection_Form = () => {
   return (
@@ -30,6 +31,9 @@ export const PCB_Selection_Form = () => {
           <SolderMask />
           <Silkscreen />
         </Flex>
+      </Stack>
+      <Stack p="4">
+        <MaterialType />
       </Stack>
     </>
   );
