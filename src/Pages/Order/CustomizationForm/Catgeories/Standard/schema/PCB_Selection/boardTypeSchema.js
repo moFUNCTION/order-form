@@ -19,7 +19,7 @@ export const boardTypeSchema = z
       Route_Process,
     } = value;
     if (type !== "Single-pieces") {
-      if (!["Accept", "Not-Accept"].includes(Route_Process)) {
+      if (!["Accept", "Not-Accept"].includes(X_out_Allowance)) {
         ctx.addIssue({
           message: `please define if you will choose x out allowance or not`,
           path: ["X_out_Allowance"],

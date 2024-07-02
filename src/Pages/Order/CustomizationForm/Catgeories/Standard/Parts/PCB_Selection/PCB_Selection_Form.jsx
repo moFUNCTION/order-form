@@ -10,6 +10,7 @@ import { CopperLayer } from "./Parts/CopperLayer";
 import { SolderMask } from "./Parts/SolderMask";
 import { Silkscreen } from "./Parts/Silkscreen";
 import { MaterialType } from "./Parts/MaterialType";
+import { useWatch } from "react-hook-form";
 
 export const PCB_Selection_Form = ({
   formState: {
@@ -19,6 +20,7 @@ export const PCB_Selection_Form = ({
   control,
   getValues,
   setValue,
+  reset,
 }) => {
   return (
     <>
@@ -30,6 +32,7 @@ export const PCB_Selection_Form = ({
           name="PCB_Specification_Selection.BoardType"
           setValue={setValue}
           errors={PCB_Specification_Selection?.BoardType}
+          reset={reset}
         />
         <Divider />
         <DesignInPanel />
