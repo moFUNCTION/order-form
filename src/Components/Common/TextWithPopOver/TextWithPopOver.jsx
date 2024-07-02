@@ -18,7 +18,7 @@ import { CiCircleQuestion } from "react-icons/ci";
 export const TextWithPopOver = ({
   title,
   children,
-  popOverHeader,
+  popOverHeader = "Content",
   ...rest
 }) => {
   return (

@@ -1,6 +1,6 @@
 import { Stack } from "@chakra-ui/react";
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { BreadcrumbLayout } from "../../Components/Layout/Breadcrumb/Breadcrumb";
 
 export default function Index() {
@@ -26,7 +26,7 @@ const Links = [
     href: "/",
   },
   {
-    title: "Order Process",
+    title: "Online Quote",
     href: "customization-form",
   },
   {

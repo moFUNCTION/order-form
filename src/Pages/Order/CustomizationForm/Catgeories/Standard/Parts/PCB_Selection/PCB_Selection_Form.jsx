@@ -11,12 +11,26 @@ import { SolderMask } from "./Parts/SolderMask";
 import { Silkscreen } from "./Parts/Silkscreen";
 import { MaterialType } from "./Parts/MaterialType";
 
-export const PCB_Selection_Form = () => {
+export const PCB_Selection_Form = ({
+  formState: {
+    errors: { PCB_Specification_Selection },
+  },
+  register,
+  control,
+  getValues,
+  setValue,
+}) => {
   return (
     <>
       <Header />
       <Stack p="4" bgColor="gray.100">
-        <BoardType />
+        <BoardType
+          register={register}
+          control={control}
+          name="PCB_Specification_Selection.BoardType"
+          setValue={setValue}
+          errors={PCB_Specification_Selection?.BoardType}
+        />
         <Divider />
         <DesignInPanel />
         <Divider />

@@ -27,11 +27,7 @@ function App() {
         >
           <Route
             index
-            element={
-              <LazyPageWrapper>
-                <CustomizationForm />
-              </LazyPageWrapper>
-            }
+            element={<Navigate to="/order/customization-form" replace />}
           />
           <Route
             path="customization-form"
@@ -66,6 +62,7 @@ function App() {
               }
             />
           </Route>
+          <Route path="request" />
         </Route>
       </Routes>
     </>
