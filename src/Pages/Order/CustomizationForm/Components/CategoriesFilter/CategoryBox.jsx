@@ -7,9 +7,9 @@ export const CategoryBox = ({ href, image, title }) => {
   const { pathname } = useLocation();
   return (
     <Button
-      colorScheme="green"
+      colorScheme="blue"
       variant="outline"
-      bgColor={pathname === href ? "green.50" : "white"}
+      bgColor={pathname === href ? "blue.50" : "white"}
       w="fit-content"
       h="fit-content"
       maxW="400px"

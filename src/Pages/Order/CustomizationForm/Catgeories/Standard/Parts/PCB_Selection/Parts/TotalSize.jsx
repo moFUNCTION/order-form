@@ -65,7 +65,7 @@ const InchToMilliModal = ({ onClose, isOpen, onSubmit }) => {
           <Button colorScheme="red" onClick={onClose}>
             Close
           </Button>
-          <Button onClick={HandleSubmit} type="submit" colorScheme="green">
+          <Button onClick={HandleSubmit} type="submit" colorScheme="blue">
             Submit
           </Button>
         </ModalFooter>
@@ -128,7 +128,7 @@ export const TotalSize = ({ register, setValue, name }) => {
             />
             <InputRightAddon bgColor="gray.300">Y</InputRightAddon>
           </InputGroup>
-          <Button onClick={onOpenInchToMilliModal} colorScheme="green">
+          <Button onClick={onOpenInchToMilliModal} colorScheme="blue">
             inch <MdArrowRight /> mm
           </Button>
           <Image src={sizePanelImage} w="100%" maxW="150px" />

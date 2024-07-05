@@ -4,15 +4,15 @@ import { IoCheckmark } from "react-icons/io5";
 export const ButtonStyled = ({ children, isActive, ...rest }) => {
   return (
     <Button
-      colorScheme={isActive && "green"}
+      colorScheme={isActive && "blue"}
       variant="outline"
-      bgColor={isActive ? "green.50" : "white"}
+      bgColor={isActive ? "blue.50" : "white"}
       size="lg"
       {...rest}
       pos="relative"
       zIndex="1"
       _hover={{
-        borderColor: "green.500",
+        borderColor: "blue.500",
       }}
       overflow="hidden"
     >
@@ -25,7 +25,7 @@ export const ButtonStyled = ({ children, isActive, ...rest }) => {
             position: "absolute",
             w: "250%",
             h: "250%",
-            bgColor: "green.500",
+            bgColor: "blue.500",
             top: " calc(-25% + 1px) ",
             left: "calc(-25% + 1px) ",
             transform: "rotate(45deg)",

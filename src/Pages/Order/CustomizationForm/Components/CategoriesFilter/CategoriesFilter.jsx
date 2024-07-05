@@ -24,7 +24,7 @@ export const CategoriesFilter = () => {
         onClick={() => {
           setIsSticky(!isSticky);
         }}
-        colorScheme="green"
+        colorScheme="blue"
         ml="auto"
         mt="auto"
         mb="auto"

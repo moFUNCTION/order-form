@@ -17,6 +17,7 @@ import { PCB_Selection_Wrapper } from "../../../../../../../Context/PCB_Sekectio
 import { SolderMaskColor } from "./Parts/SolderMaskColor";
 import { SilkScreenColor } from "./Parts/SilkScreenColor";
 import { UV_printing_Multi_color } from "./Parts/UV_printing_Multi_color";
+import { EdgeConnector } from "./Parts/EdgeConnector";
 
 export const PCB_Selection_Form = ({
   formState: {
@@ -113,6 +114,7 @@ export const PCB_Selection_Form = ({
           name="PCB_Specification_Selection.UV_printing_Multi_color"
           errors={errors?.UV_printing_Multi_color}
         />
+        <EdgeConnector />
       </Stack>
     </PCB_Selection_Wrapper>
   );
