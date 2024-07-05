@@ -81,9 +81,7 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
     }
     setValue(`${mainName}.Layers.count`, value);
   };
-  const renderedChildren = useMemo(() => {
-    return children;
-  }, []);
+
   return (
     <PCBSelectionContext.Provider
       value={{
@@ -97,7 +95,7 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
         layers: { count: layers, onChangeLayerCount },
       }}
     >
-      {renderedChildren}
+      {children}
     </PCBSelectionContext.Provider>
   );
 };

@@ -14,6 +14,8 @@ import { set, useWatch } from "react-hook-form";
 import { MinTrackSpacing } from "./Parts/MinTrackSpacing";
 import { MinHoleSize } from "./Parts/MinHoleSize";
 import { PCB_Selection_Wrapper } from "../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
+import { SolderMaskColor } from "./Parts/SolderMaskColor";
+import { SilkScreenColor } from "./Parts/SilkScreenColor";
 
 export const PCB_Selection_Form = ({
   formState: {
@@ -97,10 +99,12 @@ export const PCB_Selection_Form = ({
         <MinHoleSize
           register={register}
           control={control}
-          name="PCB_Specification_Selection.minTrackSpacing"
+          name="PCB_Specification_Selection.minHoleSize"
           setValue={setValue}
-          errors={errors?.minTrackSpacing}
+          errors={errors?.minHoleSize}
         />
+        <SolderMaskColor />
+        <SilkScreenColor />
       </Stack>
     </PCB_Selection_Wrapper>
   );
