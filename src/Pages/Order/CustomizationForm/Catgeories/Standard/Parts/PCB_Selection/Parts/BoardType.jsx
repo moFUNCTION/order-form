@@ -18,7 +18,7 @@ import BreakAwayRail from "../../../../../../../../Assets/1821380555816.png";
 import { useWatch } from "react-hook-form";
 import RoutesProccessImage from "../../../../../../../../Assets/Board-type-img.png";
 import { useBoardType } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
-export const BoardType = ({ errors, register, control, name, setValue }) => {
+export const BoardType = ({ register, name }) => {
   const {
     values: { boardType, board_X_out_Allowance, board_Break_away_rail },
     onChangeBoardType,

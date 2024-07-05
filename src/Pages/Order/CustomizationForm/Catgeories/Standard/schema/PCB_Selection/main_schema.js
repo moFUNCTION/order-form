@@ -30,4 +30,26 @@ export const PCB_Selection_Schema = z.object({
     ["0.15mm", "0.2mm", "0.25mm", "0.3mm", "0.8mm", "1.0mm", "No Drill"],
     { message: "please choose the min Hole size property" }
   ),
+  SolderMaskColor: z.enum(
+    [
+      "Green",
+      "Red",
+      "Yellow",
+      "Blue",
+      "White",
+      "Black",
+      "Purple",
+      "Matte black",
+      "Matte green",
+      "None",
+    ],
+    { message: "please choose the solder mask color" }
+  ),
+  silkScreenColor: z.enum(["White", "Black", "Yellow", "None"]),
+  UV_printing_Multi_color: z.enum([
+    "None",
+    "Single-sided",
+    "Top Single-sided",
+    "Bottom Double-sided",
+  ]),
 });

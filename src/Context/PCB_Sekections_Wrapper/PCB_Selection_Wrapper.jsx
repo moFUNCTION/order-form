@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 import React from "react";
 import { useWatch } from "react-hook-form";
@@ -15,56 +21,50 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
       `${mainName}.BoardType.Break_away_rail`,
     ],
   });
-  const [isBoardChangeLoading, setIsBoardChangeLoading] = useState();
-  const onChangeBoardType = async (value) => {
-    setIsBoardChangeLoading(true);
-    await new Promise((reslove) => {
-      const name = `${mainName}.BoardType`;
-      const DeleteValues = (...values) => {
-        values.forEach((item) => {
-          setValue(item, undefined);
-        });
-      };
-      setValue(`${name}.type`, value);
-      switch (value) {
-        case "Single-pieces":
-          {
-            DeleteValues(
-              `${name}.X_out_Allowance`,
-              `${name}.Panel_requirements`,
-              `${name}.Break_away_rail`,
-              `${name}.Route_Process`
-            );
-          }
-          break;
-        case "Panel-by-Customer": {
+  const onChangeBoardType = useCallback(async (value) => {
+    const name = `${mainName}.BoardType`;
+    const DeleteValues = (...values) => {
+      values.forEach((item) => {
+        setValue(item, undefined);
+      });
+    };
+    setValue(`${name}.type`, value);
+    switch (value) {
+      case "Single-pieces":
+        {
           DeleteValues(
+            `${name}.X_out_Allowance`,
             `${name}.Panel_requirements`,
             `${name}.Break_away_rail`,
             `${name}.Route_Process`
           );
         }
+        break;
+      case "Panel-by-Customer": {
+        DeleteValues(
+          `${name}.Panel_requirements`,
+          `${name}.Break_away_rail`,
+          `${name}.Route_Process`
+        );
       }
-      reslove();
-    });
-    setIsBoardChangeLoading(false);
-  };
-  const onChangeValueWithinBoardType = (name, value) => {
+    }
+  }, []);
+  const onChangeValueWithinBoardType = useCallback((name, value) => {
     const PropName = `${mainName}.BoardType[${name}]`;
     setValue(PropName, value);
-  };
+  }, []);
   const materialType = useWatch({
     control,
     name: `${mainName}.material.type`,
   });
-  const onChangeMaterialType = (value) => {
+  const onChangeMaterialType = useCallback((value) => {
     setValue(`${mainName}.material.type`, value);
-  };
+  }, []);
   const layers = useWatch({
     control,
     name: `${mainName}.Layers.count`,
   });
-  const onChangeLayerCount = (value) => {
+  const onChangeLayerCount = useCallback((value) => {
     const name = `${mainName}.Layers`;
     const DeleteValues = (...values) => {
       values.forEach((item) => {
@@ -80,8 +80,14 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
       );
     }
     setValue(`${mainName}.Layers.count`, value);
-  };
-
+  }, []);
+  const SolderMaskColor = useWatch({
+    name: `${mainName}.SolderMaskColor`,
+    control,
+  });
+  const onChangeSolderMaskColor = useCallback((value) => {
+    setValue(`${mainName}.SolderMaskColor`, value);
+  }, []);
   return (
     <PCBSelectionContext.Provider
       value={{
@@ -89,10 +95,10 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
           values: { boardType, board_X_out_Allowance, board_Break_away_rail },
           onChangeBoardType,
           onChangeValueWithinBoardType,
-          loading: isBoardChangeLoading,
         },
         material: { onChangeMaterialType, materialType },
         layers: { count: layers, onChangeLayerCount },
+        solderMaskColor: { color: SolderMaskColor, onChangeSolderMaskColor },
       }}
     >
       {children}
@@ -106,6 +112,10 @@ export const useBoardType = () => {
 export const useMaterial = () => {
   const values = useContext(PCBSelectionContext);
   return values.material;
+};
+export const useSolderMaskColor = () => {
+  const values = useContext(PCBSelectionContext);
+  return values.solderMaskColor;
 };
 export const useLayers = () => {
   const values = useContext(PCBSelectionContext);

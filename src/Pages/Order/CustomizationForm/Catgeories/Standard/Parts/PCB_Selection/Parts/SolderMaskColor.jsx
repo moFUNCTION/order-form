@@ -3,7 +3,9 @@ import React from "react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import SolderMaskColorImage from "../../../../../../../../Assets/Solder-mask-img.png";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
+import { useSolderMaskColor } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
 export const SolderMaskColor = () => {
+  const { color, onChangeSolderMaskColor } = useSolderMaskColor();
   return (
     <Flex gap="10">
       <TextWithPopOver title="Solder mask">
@@ -16,7 +18,13 @@ export const SolderMaskColor = () => {
       <Flex flexWrap="wrap" gap="3">
         {values.map((value) => {
           return (
-            <ButtonStyled gap="3" size="md" key={value}>
+            <ButtonStyled
+              onClick={() => onChangeSolderMaskColor(value)}
+              isActive={color === value}
+              gap="3"
+              size="md"
+              key={value}
+            >
               <Box
                 w="20px"
                 h="20px"

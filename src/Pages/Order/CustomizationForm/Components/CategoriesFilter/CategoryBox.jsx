@@ -21,7 +21,7 @@ export const CategoryBox = ({ href, image, title }) => {
       overflow="hidden"
       flexGrow="1"
     >
-      <Image src={image} w="50px" h="50px" objectFit="contain" />
+      <Image src={image} w="30px" h="30px" objectFit="contain" />
       {title}
       {pathname === href && (
         <Box

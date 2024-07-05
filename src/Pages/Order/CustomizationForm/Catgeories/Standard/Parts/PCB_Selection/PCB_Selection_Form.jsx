@@ -16,6 +16,7 @@ import { MinHoleSize } from "./Parts/MinHoleSize";
 import { PCB_Selection_Wrapper } from "../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
 import { SolderMaskColor } from "./Parts/SolderMaskColor";
 import { SilkScreenColor } from "./Parts/SilkScreenColor";
+import { UV_printing_Multi_color } from "./Parts/UV_printing_Multi_color";
 
 export const PCB_Selection_Form = ({
   formState: {
@@ -34,11 +35,7 @@ export const PCB_Selection_Form = ({
       <Stack p="4" bgColor="gray.100">
         <BoardType
           register={register}
-          control={control}
           name="PCB_Specification_Selection.BoardType"
-          setValue={setValue}
-          errors={errors?.BoardType}
-          reset={reset}
         />
         <Divider />
         <DesignInPanel
@@ -104,7 +101,18 @@ export const PCB_Selection_Form = ({
           errors={errors?.minHoleSize}
         />
         <SolderMaskColor />
-        <SilkScreenColor />
+        <SilkScreenColor
+          control={control}
+          name="PCB_Specification_Selection.silkScreenColor"
+          setValue={setValue}
+          errors={errors?.silkScreenColor}
+        />
+        <UV_printing_Multi_color
+          control={control}
+          setValue={setValue}
+          name="PCB_Specification_Selection.UV_printing_Multi_color"
+          errors={errors?.UV_printing_Multi_color}
+        />
       </Stack>
     </PCB_Selection_Wrapper>
   );

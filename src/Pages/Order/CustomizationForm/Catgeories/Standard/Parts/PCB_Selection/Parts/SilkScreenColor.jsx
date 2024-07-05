@@ -1,9 +1,31 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import SkillScreenImage from "../../../../../../../../Assets/Silkscreen-img.png";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
-export const SilkScreenColor = () => {
+import { useWatch } from "react-hook-form";
+import { useSolderMaskColor } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
+export const SilkScreenColor = ({ setValue, name, control, errors }) => {
+  const { color: SolderMaskColor } = useSolderMaskColor();
+  const SilkScreenColor = useWatch({ control, name });
+  const HandleChange = (value) => {
+    setValue(name, value);
+  };
+  useEffect(() => {
+    if (
+      ["Blue", "Red", "Black", "Purple", "Matte black", "Matte green"].includes(
+        SolderMaskColor
+      ) &&
+      SilkScreenColor === "Black"
+    ) {
+      HandleChange("White");
+    } else if (
+      (SolderMaskColor === "Yellow" && SilkScreenColor === "Yellow") ||
+      (SolderMaskColor === "White" && SilkScreenColor === "White")
+    ) {
+      HandleChange("Black");
+    }
+  }, [SolderMaskColor]);
   return (
     <Flex gap="10">
       <TextWithPopOver title="Silkscreen">
@@ -16,7 +38,33 @@ export const SilkScreenColor = () => {
       <Flex gap="3">
         {values.map((value) => {
           return (
-            <ButtonStyled gap="3" size="md" key={value}>
+            <ButtonStyled
+              onClick={() => HandleChange(value)}
+              gap="3"
+              size="md"
+              key={value}
+              isActive={SilkScreenColor === value}
+              isDisabled={(() => {
+                if (
+                  [
+                    "Blue",
+                    "Red",
+                    "Black",
+                    "Purple",
+                    "Matte black",
+                    "Matte green",
+                  ].includes(SolderMaskColor) &&
+                  value === "Black"
+                ) {
+                  return true;
+                } else if (
+                  (SolderMaskColor === "Yellow" && value === "Yellow") ||
+                  (SolderMaskColor === "White" && value === "White")
+                ) {
+                  return true;
+                }
+              })()}
+            >
               <Box
                 w="20px"
                 h="20px"
