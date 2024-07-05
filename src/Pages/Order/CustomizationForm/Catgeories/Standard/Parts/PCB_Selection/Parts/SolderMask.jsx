@@ -2,7 +2,7 @@ import React from "react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import { Flex, Select } from "@chakra-ui/react";
 
-export const SolderMask = () => {
+export const SolderMask = ({ register, name }) => {
   return (
     <Flex flexGrow="1" gap="4" alignItems="center">
       <TextWithPopOver title="Soldermask:" popOverHeader="content">
@@ -13,7 +13,15 @@ export const SolderMask = () => {
         Please be sure to select the correct parameters, otherwise, we need to
         contact you for reconfirmation.
       </TextWithPopOver>
-      <Select bgColor="white" w="170px" flexGrow="1">
+      <Select
+        cursor="pointer"
+        {...register(name, {
+          defaultValue: "top-side",
+        })}
+        bgColor="white"
+        w="170px"
+        flexGrow="1"
+      >
         <option value="top-side">top side</option>
         <option value="bottom-side">bottom side</option>
         <option value="both-sides">both sides</option>

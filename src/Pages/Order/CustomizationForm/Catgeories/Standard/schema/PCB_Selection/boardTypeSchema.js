@@ -28,7 +28,7 @@ export const boardTypeSchema = z
       if (type === "Panel-by-PCBWay") {
         if (!Panel_requirements) {
           ctx.addIssue({
-            message: `please define if you will choose x out allowance or not`,
+            message: `please fill the pannel requirment`,
             path: ["Panel_requirements"],
           });
         }

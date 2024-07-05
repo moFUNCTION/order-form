@@ -17,48 +17,13 @@ import XAllowanceImage from "../../.../../../../../../../../Assets/1649407767351
 import BreakAwayRail from "../../../../../../../../Assets/1821380555816.png";
 import { useWatch } from "react-hook-form";
 import RoutesProccessImage from "../../../../../../../../Assets/Board-type-img.png";
+import { useBoardType } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
 export const BoardType = ({ errors, register, control, name, setValue }) => {
-  const [BoardType, X_out_Allowance, Break_away_rail] = useWatch({
-    control,
-    name: [
-      `${name}.type`,
-      `${name}.X_out_Allowance`,
-      `${name}.Break_away_rail`,
-    ],
-  });
-  const DeleteValues = (...values) => {
-    values.forEach((item) => {
-      setValue(item, undefined);
-    });
-  };
-  const HandleChangeBoardType = (value) => {
-    setValue(`${name}.type`, value);
-    switch (value) {
-      case "Single-pieces":
-        {
-          DeleteValues(
-            `${name}.X_out_Allowance`,
-            `${name}.Panel_requirements`,
-            `${name}.Break_away_rail`,
-            `${name}.Route_Process`
-          );
-        }
-        break;
-      case "Panel-by-Customer": {
-        DeleteValues(
-          `${name}.Panel_requirements`,
-          `${name}.Break_away_rail`,
-          `${name}.Route_Process`
-        );
-      }
-    }
-  };
-  const HandleChangeX_Out_Allowance = (value) => {
-    setValue(`${name}.X_out_Allowance`, value);
-  };
-  const HandleChange_Break_away_rail = (value) => {
-    setValue(`${name}.Break_away_rail`, value);
-  };
+  const {
+    values: { boardType, board_X_out_Allowance, board_Break_away_rail },
+    onChangeBoardType,
+    onChangeValueWithinBoardType,
+  } = useBoardType();
   return (
     <>
       <Flex alignItems="center" flexWrap="wrap" gap="10">
@@ -78,8 +43,8 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
               <ButtonStyled
                 size="md"
                 key={index}
-                isActive={BoardType === child.value}
-                onClick={() => HandleChangeBoardType(child.value)}
+                isActive={boardType === child.value}
+                onClick={() => onChangeBoardType(child.value)}
               >
                 {child.title}
               </ButtonStyled>
@@ -87,7 +52,7 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
           })}
         </Flex>
       </Flex>
-      {BoardType === "Panel-by-Customer" && (
+      {boardType === "Panel-by-Customer" && (
         <Flex
           borderRadius="lg"
           p="4"
@@ -106,8 +71,10 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
             <Image src={XAllowanceImage} />
           </TextWithPopOver>
           <RadioGroup
-            value={X_out_Allowance}
-            onChange={HandleChangeX_Out_Allowance}
+            value={board_X_out_Allowance}
+            onChange={(value) =>
+              onChangeValueWithinBoardType("X_out_Allowance", value)
+            }
           >
             <HStack gap="4">
               <Radio value="Accept">Accept</Radio>
@@ -116,7 +83,7 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
           </RadioGroup>
         </Flex>
       )}
-      {BoardType === "Panel-by-PCBWay" && (
+      {boardType === "Panel-by-PCBWay" && (
         <Stack
           borderRadius="lg"
           p="4"
@@ -151,8 +118,10 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
               <Image src={BreakAwayRail} w="100%" />
             </TextWithPopOver>
             <RadioGroup
-              value={Break_away_rail}
-              onChange={HandleChange_Break_away_rail}
+              value={board_Break_away_rail}
+              onChange={(value) =>
+                onChangeValueWithinBoardType("Break_away_rail", value)
+              }
             >
               <HStack gap="4">
                 <Radio value="Yes">Yes</Radio>
@@ -196,8 +165,10 @@ export const BoardType = ({ errors, register, control, name, setValue }) => {
                 <Image src={XAllowanceImage} />
               </TextWithPopOver>
               <RadioGroup
-                value={X_out_Allowance}
-                onChange={HandleChangeX_Out_Allowance}
+                value={board_X_out_Allowance}
+                onChange={(value) =>
+                  onChangeValueWithinBoardType("X_out_Allowance", value)
+                }
               >
                 <HStack gap="4">
                   <Radio value="Accept">Accept</Radio>

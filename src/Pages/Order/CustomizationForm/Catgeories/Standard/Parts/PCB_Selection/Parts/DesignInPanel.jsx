@@ -1,9 +1,17 @@
 import DesignInPanelImage from "../../../../../../../../Assets/1823110858468.png";
 import { Flex, Image, Input, Tooltip } from "@chakra-ui/react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
-
+import ExampleOfDesignPannelsImage from "../../../../../../../../Assets/different.gif";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
-export const DesignInPanel = () => {
+import { useWatch } from "react-hook-form";
+export const DesignInPanel = ({ setValue, name, register, control }) => {
+  const DesignPannels = useWatch({
+    control,
+    name,
+  });
+  const HandleChangeDesignPannels = (value) => {
+    setValue(name, value);
+  };
   return (
     <Flex alignItems="center" gap="10" flexWrap="wrap">
       <TextWithPopOver
@@ -18,7 +26,12 @@ export const DesignInPanel = () => {
       <Flex flexWrap="wrap" gap="4">
         {Array.from({ length: 6 }).map((_, index) => {
           return (
-            <ButtonStyled size="md" key={index}>
+            <ButtonStyled
+              onClick={() => HandleChangeDesignPannels(index + 1)}
+              size="md"
+              key={index}
+              isActive={index + 1 === DesignPannels}
+            >
               {index + 1}
             </ButtonStyled>
           );
@@ -30,8 +43,15 @@ export const DesignInPanel = () => {
             bgColor="white"
             w="140px"
             flexGrow="1"
+            type="number"
+            {...register(name, {
+              valueAsNumber: true,
+            })}
           />
         </Tooltip>
+        <TextWithPopOver title="e.g." color="blue.500">
+          <Image src={ExampleOfDesignPannelsImage} />
+        </TextWithPopOver>
       </Flex>
     </Flex>
   );

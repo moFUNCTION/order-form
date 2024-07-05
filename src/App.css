@@ -1,3 +1,7 @@
 *{
     font-family:  Roboto-Regular, Roboto, Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif !important ;
 }
+html , body {
+    user-select: none;
+    scroll-behavior: smooth;
+}
