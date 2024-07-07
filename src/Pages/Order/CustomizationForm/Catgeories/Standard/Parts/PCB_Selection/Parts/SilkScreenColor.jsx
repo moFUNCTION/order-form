@@ -27,7 +27,7 @@ export const SilkScreenColor = ({ setValue, name, control, errors }) => {
     }
   }, [SolderMaskColor]);
   return (
-    <Flex gap="10">
+    <Flex flexWrap="wrap" gap="10">
       <TextWithPopOver title="Silkscreen">
         The silkscreen is a layer of ink trace used to identify the PCB
         components, marks, logos, symbols, and so on. The color is usually
@@ -35,7 +35,7 @@ export const SilkScreenColor = ({ setValue, name, control, errors }) => {
         black.
         <Image src={SkillScreenImage} />
       </TextWithPopOver>
-      <Flex gap="3">
+      <Flex flexWrap="wrap" gap="3">
         {values.map((value) => {
           return (
             <ButtonStyled

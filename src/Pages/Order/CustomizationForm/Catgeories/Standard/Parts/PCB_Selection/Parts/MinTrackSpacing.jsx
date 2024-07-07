@@ -20,7 +20,7 @@ export const MinTrackSpacing = ({ setValue, control, name, parentName }) => {
     }
   }, [materialType]);
   return (
-    <Flex alignItems="center" gap="10">
+    <Flex flexWrap="wrap" alignItems="center" gap="10">
       <TextWithPopOver title="Min track/spacing">
         Minimum width of the copper trace and minimum distance between two
         traces. PCBWay engineers will double-check the Min Track/Spacing.

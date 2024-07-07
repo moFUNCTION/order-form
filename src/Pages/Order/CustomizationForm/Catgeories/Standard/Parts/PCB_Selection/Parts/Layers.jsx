@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useTransition } from "react";
 import { Flex, Image } from "@chakra-ui/react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
@@ -8,6 +8,20 @@ import { SolderMask } from "./SolderMask";
 import { Silkscreen } from "./Silkscreen";
 import { useWatch } from "react-hook-form";
 import { useLayers } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
+const Layer = ({ HandleChange, value, selectedValue }) => {
+  const [isPending, startTransition] = useTransition();
+  const onClick = () => startTransition(() => HandleChange(value));
+  return (
+    <ButtonStyled
+      onClick={onClick}
+      isActive={selectedValue === value}
+      size="sm"
+      isLoading={isPending}
+    >
+      {value} {value !== 1 ? "layers" : "layer"}
+    </ButtonStyled>
+  );
+};
 export const Layers = ({
   register,
   control,
@@ -16,7 +30,13 @@ export const Layers = ({
   setValue,
   errors,
 }) => {
+  const [isPending, startTransition] = useTransition();
   const { count, onChangeLayerCount } = useLayers();
+  const HandleChange = (value) => {
+    startTransition(() => {
+      onChangeLayerCount(value);
+    });
+  };
   return (
     <>
       <Flex alignItems="center" gap="10" flexWrap="wrap">
@@ -29,14 +49,13 @@ export const Layers = ({
         <Flex alignItems="center" flexWrap="wrap" gap="4">
           {Array.of(1, 2, 4, 6, 8, 10, 12, 14).map((child, index) => {
             return (
-              <ButtonStyled
-                onClick={() => onChangeLayerCount(child)}
-                isActive={count === child}
-                size="sm"
+              <Layer
+                value={child}
+                index={index}
+                HandleChange={HandleChange}
                 key={index}
-              >
-                {child} {child !== 1 ? "layers" : "layer"}
-              </ButtonStyled>
+                selectedValue={count}
+              />
             );
           })}
         </Flex>

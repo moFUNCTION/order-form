@@ -1,10 +1,11 @@
-import { Skeleton, Stack } from "@chakra-ui/react";
+import { Accordion, AccordionPanel, Skeleton, Stack } from "@chakra-ui/react";
 import { Header } from "./Parts/PCB_Selection/Parts/Header";
 import { PCB_Selection_Form } from "./Parts/PCB_Selection/PCB_Selection_Form";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./schema/schema";
 import { useEffect } from "react";
+import { SMD_Stecial } from "./Parts/SMD_Stencil/SMD_Stecial";
 export default function Index() {
   const formReturnedValues = useForm({
     resolver: zodResolver(schema),
@@ -18,8 +19,13 @@ export default function Index() {
           material: {
             type: "FR-4",
           },
+          EdgeConnector: {
+            enabled: "No",
+          },
+          RemoveProduct: "No",
         },
       };
+
       if (formData) {
         return Object.assign(defaultData, JSON.parse(formData));
       }
@@ -38,17 +44,20 @@ export default function Index() {
     };
   }, []);
   return (
-    <Stack
-      overflow="hidden"
-      border="1px"
-      borderColor="gray.500"
-      w="100%"
-      borderRadius="md"
-      as={Skeleton}
-      isLoaded={!formReturnedValues.formState.isLoading}
-      fadeDuration={2}
-    >
-      <PCB_Selection_Form {...formReturnedValues} />
-    </Stack>
+    <Accordion allowMultiple={false}>
+      <Stack
+        overflow="hidden"
+        border="1px"
+        borderColor="gray.500"
+        w="100%"
+        borderRadius="md"
+        as={Skeleton}
+        isLoaded={!formReturnedValues.formState.isLoading}
+        fadeDuration={2}
+      >
+        <PCB_Selection_Form {...formReturnedValues} />
+        <SMD_Stecial />
+      </Stack>
+    </Accordion>
   );
 }

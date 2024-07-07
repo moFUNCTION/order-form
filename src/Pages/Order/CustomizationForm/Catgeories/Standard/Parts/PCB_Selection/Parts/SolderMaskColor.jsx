@@ -1,13 +1,19 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
-import React from "react";
+import { Box, Flex, Image, Skeleton } from "@chakra-ui/react";
+import React, { useTransition } from "react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import SolderMaskColorImage from "../../../../../../../../Assets/Solder-mask-img.png";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
 import { useSolderMaskColor } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
 export const SolderMaskColor = () => {
+  const [isPending, startTransition] = useTransition();
   const { color, onChangeSolderMaskColor } = useSolderMaskColor();
+  const HandleChangeSolderMaskColor = (value) => {
+    startTransition(() => {
+      onChangeSolderMaskColor(value);
+    });
+  };
   return (
-    <Flex gap="10">
+    <Flex flexWrap="wrap" gap="10">
       <TextWithPopOver title="Solder mask">
         Solder mask color refers to the color of the PCB surface. Currently,
         PCBWay provides 9 conventional solder mask colors. If you need pink,
@@ -15,15 +21,17 @@ export const SolderMaskColor = () => {
         choose.
         <Image src={SolderMaskColorImage} />
       </TextWithPopOver>
-      <Flex flexWrap="wrap" gap="3">
+      <Flex maxW="700px" flexWrap="wrap" gap="3">
         {values.map((value) => {
           return (
             <ButtonStyled
-              onClick={() => onChangeSolderMaskColor(value)}
+              onClick={() => HandleChangeSolderMaskColor(value)}
               isActive={color === value}
               gap="3"
               size="md"
               key={value}
+              isLoading={isPending}
+              flexGrow="1"
             >
               <Box
                 w="20px"

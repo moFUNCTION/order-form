@@ -13,8 +13,7 @@ import {
   Flex,
   Tooltip,
 } from "@chakra-ui/react";
-import { CiCircleQuestion } from "react-icons/ci";
-
+import { AiFillQuestionCircle } from "react-icons/ai";
 export const TextWithPopOver = ({
   title,
   children,
@@ -22,15 +21,13 @@ export const TextWithPopOver = ({
   ...rest
 }) => {
   return (
-    <Popover>
+    <Popover trigger="hover" placement="top-start">
       <PopoverTrigger>
         <Flex {...rest} alignItems="center" gap="2">
-          <Tooltip label="click here to show data">
-            <Text gap="2">{title}</Text>
-          </Tooltip>
-          <CiCircleQuestion
+          <Text gap="2">{title}</Text>
+          <AiFillQuestionCircle
             style={{
-              color: "green.500",
+              color: "blue",
             }}
           />
         </Flex>

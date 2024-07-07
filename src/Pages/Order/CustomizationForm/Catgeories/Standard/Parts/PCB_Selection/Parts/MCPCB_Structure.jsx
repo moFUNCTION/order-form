@@ -13,13 +13,13 @@ export const MCPCB_Structure = ({ layers, setValue, name, control }) => {
     setValue(name, value);
   };
   return (
-    <Flex gap="10">
+    <Flex flexWrap="wrap" gap="10">
       <TextWithPopOver title="Structure of MCPCB">
         This is for Double-sided / Multilayer metal substrate boards (Aluminum
         or Copper Base). There are two structures to choose from according to
         whether the metal base is in the middle or the bottom.
       </TextWithPopOver>
-      <Flex gap="2">
+      <Flex flexWrap="wrap" gap="2">
         {MCPCB_Structure_values.map((child) => {
           return (
             <ButtonStyled

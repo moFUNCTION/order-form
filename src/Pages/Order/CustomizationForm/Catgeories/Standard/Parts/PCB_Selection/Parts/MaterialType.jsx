@@ -1,5 +1,13 @@
-import { Box, Button, Flex, Image, Stack, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Skeleton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import React, { useEffect, useTransition } from "react";
 import { TextWithPopOver } from "../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
 import FR_4_Image from "../../../../../../../../Assets/fr4_metarial.jpg";
@@ -18,6 +26,38 @@ import {
   useLayers,
   useMaterial,
 } from "../../../../../../../../Context/PCB_Sekections_Wrapper/PCB_Selection_Wrapper";
+const MaterialBtn = ({
+  value,
+  selectedValue,
+  HandleChangeMaterialType,
+  title,
+  subTitle,
+  image,
+  layersCount,
+}) => {
+  const [isPending, startTransition] = useTransition();
+  const onClick = () => startTransition(() => HandleChangeMaterialType(value));
+  return (
+    <ButtonStyled
+      onClick={onClick}
+      isActive={value === selectedValue}
+      size="lg"
+      gap="3"
+      isDisabled={layersCount < 4 && value === "HDI"}
+      isLoading={isPending}
+    >
+      <Image src={image} w="30px" h="30px" objectFit="contain" />
+      <Box textAlign="left">
+        {title}
+        {subTitle && (
+          <Text fontSize="xs" color="yellow.600">
+            {subTitle}
+          </Text>
+        )}
+      </Box>
+    </ButtonStyled>
+  );
+};
 export const MaterialType = ({
   setValue,
   control,
@@ -26,8 +66,13 @@ export const MaterialType = ({
   register,
 }) => {
   const { count: layersCount, onChangeLayerCount } = useLayers();
+  const [isPending, startTransition] = useTransition();
   const { onChangeMaterialType, materialType } = useMaterial();
-
+  const HandleChangeMaterialType = (value) => {
+    startTransition(() => {
+      onChangeMaterialType(value);
+    });
+  };
   useEffect(() => {
     if (layersCount < 4 && materialType === "HDI") {
       onChangeMaterialType("FR-4");
@@ -60,29 +105,13 @@ export const MaterialType = ({
           <Flex flexWrap="wrap" gap="4">
             {materials.map((material, index) => {
               return (
-                <ButtonStyled
-                  onClick={() => onChangeMaterialType(material.value)}
-                  isActive={material.value === materialType}
-                  size="lg"
+                <MaterialBtn
+                  {...material}
+                  layersCount={layersCount}
+                  HandleChangeMaterialType={HandleChangeMaterialType}
+                  selectedValue={materialType}
                   key={index}
-                  gap="3"
-                  isDisabled={layersCount < 4 && material.value === "HDI"}
-                >
-                  <Image
-                    src={material.image}
-                    w="30px"
-                    h="30px"
-                    objectFit="contain"
-                  />
-                  <Box textAlign="left">
-                    {material.title}
-                    {material.subTitle && (
-                      <Text fontSize="xs" color="yellow.600">
-                        {material.subTitle}
-                      </Text>
-                    )}
-                  </Box>
-                </ButtonStyled>
+                />
               );
             })}
           </Flex>

@@ -15,7 +15,7 @@ export const UV_printing_Multi_color = ({
     setValue(name, value);
   };
   return (
-    <Flex gap="10" alignItems="center">
+    <Flex flexWrap="wrap" gap="10" alignItems="center">
       <TextWithPopOver title="UV printing Multi-color(beta)">
         Prerequisites for Ordering: 1. Maximum size for a single piece:
         270*470MM; 2. Selection of soldermask color. Design Specifications: 1.
@@ -30,7 +30,7 @@ export const UV_printing_Multi_color = ({
         indicate your desired printing location on the board.
       </TextWithPopOver>
       <Stack>
-        <Flex gap="3">
+        <Flex flexWrap="wrap" gap="3">
           {values.map((value) => {
             return (
               <ButtonStyled

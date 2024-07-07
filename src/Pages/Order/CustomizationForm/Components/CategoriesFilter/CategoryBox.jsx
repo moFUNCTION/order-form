@@ -1,22 +1,22 @@
 import { Box, Button, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { useTransition } from "react";
 import { IoCheckmark } from "react-icons/io5";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const CategoryBox = ({ href, image, title }) => {
   const { pathname } = useLocation();
+  const [isPending, startTransition] = useTransition();
+  const Navigate = useNavigate();
+  const HandleClick = () => startTransition(() => Navigate(href));
   return (
     <Button
       colorScheme="blue"
       variant="outline"
       bgColor={pathname === href ? "blue.50" : "white"}
-      w="fit-content"
-      h="fit-content"
-      maxW="400px"
       gap="4"
       paddingBlock="2"
-      as={Link}
-      to={href}
+      onClick={HandleClick}
+      isLoading={isPending}
       pos="relative"
       overflow="hidden"
       flexGrow="1"
@@ -31,7 +31,7 @@ export const CategoryBox = ({ href, image, title }) => {
             position: "absolute",
             w: "250%",
             h: "250%",
-            bgColor: "green.500",
+            bgColor: "blue.500",
             top: " calc(-25% + 1px) ",
             left: "calc(-25% + 1px) ",
             transform: "rotate(45deg)",

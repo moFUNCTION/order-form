@@ -50,7 +50,7 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
     }
   }, []);
   const onChangeValueWithinBoardType = useCallback((name, value) => {
-    const PropName = `${mainName}.BoardType[${name}]`;
+    const PropName = `${mainName}.BoardType.${name}`;
     setValue(PropName, value);
   }, []);
   const materialType = useWatch({
@@ -88,6 +88,23 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
   const onChangeSolderMaskColor = useCallback((value) => {
     setValue(`${mainName}.SolderMaskColor`, value);
   }, []);
+
+  const [EdgeConnectorType, EdgeConnectorBevelling, EdgeConnectorEnabled] =
+    useWatch({
+      control,
+      name: [
+        `${mainName}.EdgeConnector.type`,
+        `${mainName}.EdgeConnector.Bevelling`,
+        `${mainName}.EdgeConnector.enabled`,
+      ],
+    });
+  const onChangeValueWithinEdgeConnector = useCallback(
+    (name = "enabled", value) => {
+      const PropName = `${mainName}.EdgeConnector.${name}`;
+      setValue(PropName, value);
+    },
+    []
+  );
   return (
     <PCBSelectionContext.Provider
       value={{
@@ -99,6 +116,14 @@ export const PCB_Selection_Wrapper = ({ children, control, setValue }) => {
         material: { onChangeMaterialType, materialType },
         layers: { count: layers, onChangeLayerCount },
         solderMaskColor: { color: SolderMaskColor, onChangeSolderMaskColor },
+        EdgeConnector: {
+          values: {
+            type: EdgeConnectorType,
+            Bevelling: EdgeConnectorBevelling,
+            enabled: EdgeConnectorEnabled,
+          },
+          onChangeValueWithinEdgeConnector,
+        },
       }}
     >
       {children}
@@ -123,4 +148,8 @@ export const useLayers = () => {
 };
 export const usePcbSelectionStoredValues = () => {
   return useContext(PCBSelectionContext);
+};
+export const useEdgeConnector = () => {
+  const values = useContext(PCBSelectionContext);
+  return values.EdgeConnector;
 };

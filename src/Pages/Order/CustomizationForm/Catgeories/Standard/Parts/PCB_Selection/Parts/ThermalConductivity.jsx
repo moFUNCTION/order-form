@@ -23,7 +23,7 @@ export const ThermalConductivity = ({
     }
   }, [materialType]);
   return (
-    <Flex alignItems="center" gap="3" mt="2">
+    <Flex flexWrap="wrap" alignItems="center" gap="3" mt="2">
       <TextWithPopOver title="Thermal conductivity">
         The thermal conductivity of aluminum PCB/copper base PCB is the measure
         of the ability of the material to conduct heat away from a source. It is

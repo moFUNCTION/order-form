@@ -3,6 +3,7 @@ import { boardTypeSchema } from "./boardTypeSchema";
 import { SizeSchema } from "./TotalSizeSchema";
 import { LayersSchema } from "./LayersSchema";
 import { MaterialSchema } from "./MaterialSchema";
+import { EdgeConnectorSchema } from "./EdgeConnectorSchema";
 
 export const PCB_Selection_Schema = z.object({
   BoardType: boardTypeSchema,
@@ -52,4 +53,44 @@ export const PCB_Selection_Schema = z.object({
     "Top Single-sided",
     "Bottom Double-sided",
   ]),
+  EdgeConnector: EdgeConnectorSchema,
+  Surface_finish: z.enum(
+    [
+      "HASL with lead",
+      "HASL lead free",
+      "Immersion gold(ENIG)",
+      "OSP",
+      "Hard gold",
+      "Immersion silver(Ag)",
+      "Immersion tin",
+      "HASL lead free + Selective Immersion gold",
+      "HASL lead free + Selective Hard gold",
+      "Immersion gold + Selective Hard gold",
+      "ENEPIG",
+      "None(Plain copper)",
+    ],
+    { message: "please choose the surface finish" }
+  ),
+  ViaProcess: z.enum([
+    "Tenting vias",
+    "Plugged vias with solder mask",
+    "Vias not covered",
+  ]),
+  FinisedCopper: z.enum([
+    "Bare board(0 oz Cu)",
+    "1 oz Cu",
+    "2 oz Cu",
+    "3 oz Cu",
+    "4 oz Cu",
+    "5 oz Cu",
+    "6 oz Cu",
+    "7 oz Cu",
+    "8 oz Cu",
+    "9 oz Cu",
+    "10 oz Cu",
+    "11 oz Cu",
+    "12 oz Cu",
+    "13 oz Cu",
+  ]),
+  RemoveProduct: z.enum(["No", "Yes (extra+$ 1.5)", "Specify a location"]),
 });

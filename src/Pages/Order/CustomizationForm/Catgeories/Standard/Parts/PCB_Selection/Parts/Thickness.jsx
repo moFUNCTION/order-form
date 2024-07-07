@@ -33,10 +33,16 @@ export const Thickness = ({
           return !child.isDisabled(layers);
         }).value
       );
+    } else {
+      HandleChange(
+        normalValues.find((child) => {
+          return !child.isDisabled(layers);
+        }).value
+      );
     }
   }, [layers]);
   return (
-    <Flex mt="3" alignItems="center" gap="10">
+    <Flex flexWrap="wrap" mt="3" alignItems="center" gap="10">
       <TextWithPopOver title="Thickness">
         For ordinary materials, the board thickness refers to the thickness of
         the PCB after production is complete, and the error is about 10%
@@ -81,6 +87,7 @@ export const Thickness = ({
             {...register(name, {
               valueAsNumber: true,
             })}
+            min={0.2}
             type="number"
             w="100px"
             placeholder="1.7-8"
@@ -143,21 +150,39 @@ const normalValues = [
   },
   {
     value: 2,
+    isDisabled: () => {
+      return false;
+    },
   },
   {
     value: 2.4,
+    isDisabled: () => {
+      return false;
+    },
   },
   {
     value: 2.6,
+    isDisabled: () => {
+      return false;
+    },
   },
   {
     value: 2.8,
+    isDisabled: () => {
+      return false;
+    },
   },
   {
     value: 3,
+    isDisabled: () => {
+      return false;
+    },
   },
   {
     value: 3.2,
+    isDisabled: () => {
+      return false;
+    },
   },
 ];
 const valuesWithinRoger = [0.203, 0.305, 0.406, 0.508, 0.813, 1.524];
