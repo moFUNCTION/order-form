@@ -167,8 +167,16 @@ export const PCB_Selection_Form = ({
               name="PCB_Specification_Selection.RemoveProduct"
               errors={errors?.RemoveProduct}
             />
-            <CustomizesServices />
-            <SpecialRequest />
+            <CustomizesServices
+              name="PCB_Specification_Selection.CustomizesServices"
+              register={register}
+              control={control}
+              setValue={setValue}
+            />
+            <SpecialRequest
+              register={register}
+              name="PCB_Specification_Selection.specialRequest"
+            />
           </Stack>
         </Stack>
       </Stack>

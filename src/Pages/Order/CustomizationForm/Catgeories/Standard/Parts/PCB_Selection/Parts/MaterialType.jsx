@@ -66,13 +66,7 @@ export const MaterialType = ({
   register,
 }) => {
   const { count: layersCount, onChangeLayerCount } = useLayers();
-  const [isPending, startTransition] = useTransition();
   const { onChangeMaterialType, materialType } = useMaterial();
-  const HandleChangeMaterialType = (value) => {
-    startTransition(() => {
-      onChangeMaterialType(value);
-    });
-  };
   useEffect(() => {
     if (layersCount < 4 && materialType === "HDI") {
       onChangeMaterialType("FR-4");
@@ -108,7 +102,9 @@ export const MaterialType = ({
                 <MaterialBtn
                   {...material}
                   layersCount={layersCount}
-                  HandleChangeMaterialType={HandleChangeMaterialType}
+                  HandleChangeMaterialType={() =>
+                    onChangeMaterialType(material.value)
+                  }
                   selectedValue={materialType}
                   key={index}
                 />

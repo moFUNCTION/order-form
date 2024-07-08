@@ -20,8 +20,31 @@ import { TextWithPopOver } from "../../../../../../../../../Components/Common/Te
 import ULMarketingImage from "../../../../../../../../../Assets/1443478903841t.png";
 import ULMarketingImage2 from "../../../../../../../../../Assets/17_ulmark.png";
 import { CustomizeServicesOptions } from "./CustomizedServicesOptions";
-export const CustomizesServices = ({ setValue, register, name }) => {
+import { useFieldArray, useWatch } from "react-hook-form";
+export const CustomizesServices = ({ register, name, control, setValue }) => {
   const [isPhoneQuery] = useMediaQuery("(max-width: 700px)");
+  const feuturesSelected = useWatch({
+    control,
+    name: `${name}.feuturesSelected`,
+  });
+  const HandleChangeFeuturesSelected = ({ isChecked, value }) => {
+    const HandleAdd = () => {
+      setValue(`${name}.feuturesSelected`, [...feuturesSelected, value]);
+    };
+    const HandleDelete = () => {
+      setValue(
+        `${name}.feuturesSelected`,
+        feuturesSelected.filter((feuture) => {
+          return feuture !== value;
+        })
+      );
+    };
+    if (isChecked) {
+      HandleAdd();
+    } else {
+      HandleDelete();
+    }
+  };
   return (
     <Accordion allowToggle>
       <AccordionItem>
@@ -56,7 +79,7 @@ export const CustomizesServices = ({ setValue, register, name }) => {
                 manufacturing and assembly. Coating material could be removed
                 after board through wave soldering.
               </TextWithPopOver>
-              <Select>
+              <Select {...register(`${name}.peelable_soldermask`)}>
                 {["None", "Top Side", "Bottom Side", "Both Sides"].map(
                   (value) => {
                     return (
@@ -79,7 +102,7 @@ export const CustomizesServices = ({ setValue, register, name }) => {
                 manufacturing and assembly. Coating material could be removed
                 after board through wave soldering.
               </TextWithPopOver>
-              <Select>
+              <Select {...register(`${name}.Hole_Copper_Thickness`)}>
                 {[
                   "None",
                   "20um",
@@ -111,7 +134,7 @@ export const CustomizesServices = ({ setValue, register, name }) => {
                 <Image src={ULMarketingImage} w="100%" />
               </TextWithPopOver>
               <Image src={ULMarketingImage2} w="30px" objectFit="contain" />
-              <Select>
+              <Select {...register(`${name}.UL_Marking`)}>
                 {[
                   "None",
                   "Yes - add to top silkscreen",
@@ -134,7 +157,7 @@ export const CustomizesServices = ({ setValue, register, name }) => {
               <TextWithPopOver flexShrink="0" title="Date code">
                 Add the production time on the PCB
               </TextWithPopOver>
-              <Select>
+              <Select {...register(`${name}.Date_Code`)}>
                 {[
                   "None",
                   "Add as PCBWay prefer",
@@ -153,13 +176,24 @@ export const CustomizesServices = ({ setValue, register, name }) => {
           <Divider />
           <Flex flexWrap="wrap" gap="7">
             {CustomizeServicesOptions.map((item, index) => {
+              const isChecked = feuturesSelected?.find((feuture) => {
+                feuture === item.label;
+              });
               return (
                 <Flex
                   flex={!isPhoneQuery && "1 0 30%"}
                   maxW={!isPhoneQuery && "30%"}
                   key={index}
                 >
-                  <Checkbox>
+                  <Checkbox
+                    isChecked={isChecked}
+                    onChange={(e) =>
+                      HandleChangeFeuturesSelected({
+                        isChecked: e.target.checked,
+                        value: item.label,
+                      })
+                    }
+                  >
                     <TextWithPopOver title={item.label}>
                       {item.description}
                       <Image w="100%" src={item.imgSrc} />

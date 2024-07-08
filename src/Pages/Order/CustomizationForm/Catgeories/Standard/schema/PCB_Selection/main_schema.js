@@ -93,4 +93,6 @@ export const PCB_Selection_Schema = z.object({
     "13 oz Cu",
   ]),
   RemoveProduct: z.enum(["No", "Yes (extra+$ 1.5)", "Specify a location"]),
+  specialRequest: z.string().optional(),
+  useCustomizesServicesAndAdvancedOption: z.boolean(),
 });

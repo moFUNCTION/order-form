@@ -44,7 +44,7 @@ export default function Index() {
     };
   }, []);
   return (
-    <Accordion allowMultiple={false}>
+    <Accordion allowMultiple={false} allowToggle>
       <Stack
         overflow="hidden"
         border="1px"
@@ -56,7 +56,7 @@ export default function Index() {
         fadeDuration={2}
       >
         <PCB_Selection_Form {...formReturnedValues} />
-        <SMD_Stecial />
+        <SMD_Stecial {...formReturnedValues} />
       </Stack>
     </Accordion>
   );

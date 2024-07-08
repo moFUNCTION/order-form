@@ -21,14 +21,6 @@ export const Header = ({ isOpened }) => {
         </Heading>
         <Text>Order together with PCB</Text>
       </Flex>
-      <Flex flexWrap="wrap" gap="4" alignItems="center">
-        <Button gap="2" variant="link" alignItems="center">
-          <IoIosVideocam /> How it works (3 steps)
-        </Button>
-        <Button gap="2" variant="link" alignItems="center">
-          <MdDownload /> {"Quick-order PCB >>"}
-        </Button>
-      </Flex>
     </Flex>
   );
 };
