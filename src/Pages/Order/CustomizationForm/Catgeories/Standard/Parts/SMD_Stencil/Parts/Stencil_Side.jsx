@@ -13,7 +13,7 @@ export const Stencil_Side = ({ name, setValue, control }) => {
         For Top+Bottom(On Single Stencil) the stencil size should be at least
         twice the PCB size.
       </TextWithPopOver>
-      <Flex gap="3">
+      <Flex flexWrap="wrap" gap="3">
         {values.map((value, index) => {
           return (
             <ButtonStyled
@@ -21,6 +21,7 @@ export const Stencil_Side = ({ name, setValue, control }) => {
               isActive={selectedValue === value}
               size="md"
               key={index}
+              flexGrow="1"
             >
               {value}
             </ButtonStyled>

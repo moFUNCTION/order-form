@@ -1,17 +1,15 @@
 import { Flex, Text, Image, Stack } from "@chakra-ui/react";
 import React from "react";
 import { ButtonStyled } from "../../../../../../../../Components/Common/BottonStyled/ButtonStyled";
-import { useWatch } from "react-hook-form";
 import ImageAssets1 from "../../../../../../../../Assets/stencil-frame-no.png";
 import ImageAssets2 from "../../../../../../../../Assets/stencil-sm.png";
-import { TextWithPopOver } from "./../../../../../../../../Components/Common/TextWithPopOver/TextWithPopOver";
 export const StencilType = ({ onChange, selectedValue }) => {
   return (
     <Flex flexWrap="wrap" w="100%" gap="8" alignItems="center">
       <Text w="fit-content" flexShrink="0">
         Stencil type :
       </Text>
-      <Stack>
+      <Stack flexGrow="1">
         <Flex flexWrap="wrap" alignItems="center" gap="3">
           {values.map((value, index) => {
             return (
@@ -20,6 +18,8 @@ export const StencilType = ({ onChange, selectedValue }) => {
                 key={index}
                 onClick={() => onChange(value)}
                 isActive={selectedValue === value}
+                flexGrow="1"
+                maxW="300px"
               >
                 {value}
               </ButtonStyled>

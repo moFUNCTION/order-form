@@ -3,7 +3,7 @@ import { Flex, Image, Heading, Button } from "@chakra-ui/react";
 import HeaderImage from "../../../../../../../../Assets/pcb.png";
 import { IoIosVideocam } from "react-icons/io";
 import { MdDownload } from "react-icons/md";
-export const Header = () => {
+export const Header = ({ selectable }) => {
   return (
     <Flex
       justifyContent="space-between"

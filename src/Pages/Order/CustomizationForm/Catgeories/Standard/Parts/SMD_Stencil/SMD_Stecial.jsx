@@ -11,6 +11,11 @@ import { useWatch } from "react-hook-form";
 import { MultiLevelStepStencil } from "./Parts/MultiLevelStepStencil";
 import { Size } from "./Parts/Size";
 import { Stencil_Side } from "./Parts/Stencil_Side";
+import { Quantity } from "./Parts/Quantity";
+import { Thickness } from "./Parts/Thickness";
+import { Existing_Fiducials } from "./Parts/Existing_Fiducials";
+import { Electropolishing } from "./Parts/Electropolishing";
+import { SpecialRequist } from "./Parts/SpecialRequist";
 
 export const SMD_Stecial = ({
   formState: {
@@ -70,6 +75,26 @@ export const SMD_Stecial = ({
                 control={control}
                 name="SMD_Stecial.Stencil_Side"
                 setValue={setValue}
+              />
+              <Quantity register={register} name="SMD_Stecial.Quantity" />
+              <Thickness
+                control={control}
+                setValue={setValue}
+                name="SMD_Stecial.Thickness"
+              />
+              <Existing_Fiducials
+                control={control}
+                setValue={setValue}
+                name="SMD_Stecial.ExistingFiducials"
+              />
+              <Electropolishing
+                control={control}
+                setValue={setValue}
+                name="SMD_Stecial.Electropolishing"
+              />
+              <SpecialRequist
+                register={register}
+                name="SMD_Stecial.Other_Special_Request"
               />
             </AccordionPanel>
           </>
