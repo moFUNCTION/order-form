@@ -10,8 +10,8 @@ export const PCB_Selection_Schema = z
     isEnabled: z.boolean(),
     BoardType: boardTypeSchema,
     Different_design_in_panel: z.number().optional(),
-    Size: SizeSchema.optional(),
-    Quantity: z.number().optional(),
+    Size: SizeSchema,
+    Quantity: z.any(),
     Layers: LayersSchema.optional(),
     material: MaterialSchema.optional(),
     minTrackSpacing: z
@@ -95,7 +95,7 @@ export const PCB_Selection_Schema = z
     useCustomizesServicesAndAdvancedOption: z.boolean().optional(),
   })
   .superRefine((data, ctx) => {
-    if (data.isEnabled) {
+    if (data.isEnabled === true) {
       const requiredFields = [
         "Different_design_in_panel",
         "Quantity",
@@ -111,13 +111,25 @@ export const PCB_Selection_Schema = z
       ];
 
       requiredFields.forEach((field) => {
-        if (data[field] === undefined || data[field] === null) {
+        if (!data[field]) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [field],
-            message: `${field} is required when isEnabled is true`,
+            message: `${field} is required when you enable pcb selection is true`,
           });
         }
       });
+      if (!data.Size.x) {
+        ctx.addIssue({
+          message: "please fill the x field",
+          path: ["Size.x"],
+        });
+      }
+      if (!data.Size.y) {
+        ctx.addIssue({
+          message: "please fill the y field",
+          path: ["Size.y"],
+        });
+      }
     }
   });

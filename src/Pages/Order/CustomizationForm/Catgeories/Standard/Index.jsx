@@ -14,7 +14,9 @@ import { schema } from "./schema/schema";
 import { useEffect } from "react";
 import { SMD_Stecial } from "./Parts/SMD_Stencil/SMD_Stecial";
 import { Assemply_Service } from "./Parts/Assemply_Service/Assemply_Service";
+import { useNavigate } from "react-router-dom";
 export default function Index() {
+  const Navigate = useNavigate();
   const formReturnedValues = useForm({
     resolver: zodResolver(schema),
     defaultValues: async () => {
@@ -78,8 +80,25 @@ export default function Index() {
           AssemplySide: "Top side",
           Quantity: 1,
           PayAttention: {
-            ContainesSenstiveComponents: "No",
+            ContainsSensitiveComponents: "No",
             AcceptAlternativesMadeInChina: "No",
+          },
+          OtherParams: {
+            NumberOfUniqueParts: 0,
+            NumberOfSmdParts: 0,
+            NumberOfBGAParts: 0,
+            TotalNumberOfTHTParts: 0,
+          },
+          CustomizesServices: {
+            DepanelBoards: "No",
+            FunctionTest: "No",
+            ConformalCoating: "No",
+            FirmwareLoading: "No",
+            PressfitParts: "No",
+            BoxBuildAssembly: "No",
+            CableWireHarnessAssembly: "No",
+            SMTCustompackaging: "No",
+            XrayTest: 0,
           },
         },
       };
@@ -102,8 +121,10 @@ export default function Index() {
     };
   }, []);
   const onSubmit = (data) => {
-    console.log(data);
+    localStorage.setItem("standard-catgeory-form", JSON.stringify(data));
+    Navigate(`/order/request/Standard`);
   };
+  console.log(formReturnedValues.formState.errors);
   return (
     <Accordion allowMultiple={false} allowToggle>
       <Stack

@@ -31,6 +31,5 @@ const Links = [
   },
   {
     title: "Request this type of product",
-    href: "request",
   },
 ];

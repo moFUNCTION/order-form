@@ -1,18 +1,21 @@
-import { Accordion, Skeleton } from "@chakra-ui/react";
+import { Accordion, Button, Flex, Skeleton } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { PCB_Selection_Form } from "./Parts/PCB_Selection/PCB_Selection_Form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { schema } from "./schema/schema";
 import { Assemply_Service } from "./Parts/Assemply_Service/Assemply_Service";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
+  const Navigate = useNavigate();
   const formReturnedValues = useForm({
     resolver: zodResolver(schema),
     defaultValues: async () => {
       const formData = localStorage.getItem("assemply-catgeory-form");
       const defaultData = {
         PCB_Specification_Selection: {
+          isEnabled: false,
           BoardType: {
             type: "Single-pieces",
           },
@@ -46,13 +49,31 @@ export default function Index() {
           RemoveProduct: "No",
         },
         AssemplyServices: {
+          isEnabled: false,
           Options: "Turnkey",
           BoardType: "Single pieces",
           AssemplySide: "Top side",
           Quantity: 1,
           PayAttention: {
-            ContainesSenstiveComponents: "No",
+            ContainsSenstiveComponents: "No",
             AcceptAlternativesMadeInChina: "No",
+          },
+          OtherParams: {
+            NumberOfUniqueParts: 0,
+            NumberOfSmdParts: 0,
+            NumberOfBGAParts: 0,
+            TotalNumberOfTHTParts: 0,
+          },
+          CustomizesServices: {
+            DepanelBoards: "No",
+            FunctionTest: "No",
+            ConformalCoating: "No",
+            FirmwareLoading: "No",
+            PressfitParts: "No",
+            BoxBuildAssembly: "No",
+            CableWireHarnessAssembly: "No",
+            SMTCustompackaging: "No",
+            XrayTest: 0,
           },
         },
       };
@@ -73,6 +94,10 @@ export default function Index() {
       window.removeEventListener("beforeunload", save_event);
     };
   }, []);
+  const onSubmit = (data) => {
+    localStorage.setItem("assemply-catgeory-form", JSON.stringify(data));
+    Navigate(`/order/request/Assemply`);
+  };
   return (
     <Accordion
       as={Skeleton}
@@ -83,6 +108,18 @@ export default function Index() {
     >
       <Assemply_Service {...formReturnedValues} />
       <PCB_Selection_Form {...formReturnedValues} />
+      <Flex w="100%">
+        <Button
+          onClick={formReturnedValues.handleSubmit(onSubmit)}
+          w="100%"
+          maxW="300px"
+          ml="auto"
+          colorScheme="blue"
+          mt="2"
+        >
+          Submit
+        </Button>
+      </Flex>
     </Accordion>
   );
 }

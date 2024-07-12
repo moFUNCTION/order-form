@@ -1,85 +1,96 @@
 import { z } from "zod";
+import { OtherParamsSchema } from "./OtherParamsShema";
+import { CustomizeServices } from "./CustomizesServices";
 
-export const Assemply_Service_Schema = z
+export const AssemblyServiceSchema = z
   .object({
     isEnabled: z.boolean(),
     Options: z
       .enum(["Turnkey", "Kitted or Consigned", "Combo"], {
-        message: "please choose one from the options",
+        message: "Please choose one of the options",
       })
       .optional(),
     BoardType: z
       .enum(["Single pieces", "Panelized PCBs"], {
-        message: "please choose the board type",
+        message: "Please choose the board type",
       })
       .optional(),
     AssemplySide: z
       .enum(["Top side", "Bottom side", "Both sides"], {
-        message: "please choose the Assemply side",
+        message: "Please choose the assembly side",
       })
       .optional(),
     Quantity: z
-      .number({ message: "please fill the quantity field" })
-      .min(0, { message: "please type a valid quantity" })
+      .number({ message: "Please fill in the quantity field" })
+      .min(0, { message: "Please enter a valid quantity" })
       .optional(),
     PayAttention: z
       .object({
-        ContainesSenstiveComponents: z.enum(["Yes", "No"]).optional(),
-        AcceptAlternativesMadeInChina: z.enum(["Yes", "No"]).optional(),
-        providedText: z.any().optional(),
+        ContainsSensitiveComponents: z
+          .enum(["Yes", "No"], {
+            message: "Please indicate if there are sensitive components",
+          })
+          .optional(),
+        AcceptAlternativesMadeInChina: z
+          .enum(["Yes", "No"], {
+            message:
+              "Please indicate if alternatives made in China are acceptable",
+          })
+          .optional(),
+        providedText: z.string().optional(),
       })
       .optional(),
+    OtherParams: OtherParamsSchema,
+    CustomizesServices: CustomizeServices,
   })
   .superRefine((data, ctx) => {
     if (data.isEnabled) {
-      if (!data.Options) {
-        ctx.addIssue({
-          path: ["Options"],
-          message: "please choose one from the options",
-        });
-      }
-      if (!data.BoardType) {
-        ctx.addIssue({
-          path: ["BoardType"],
-          message: "please choose the board type",
-        });
-      }
-      if (!data.AssemplySide) {
-        ctx.addIssue({
-          path: ["AssemplySide"],
-          message: "please choose the Assemply side",
-        });
-      }
-      if (data.Quantity === undefined) {
-        ctx.addIssue({
-          path: ["Quantity"],
-          message: "please fill the quantity field",
-        });
-      } else if (data.Quantity < 0) {
-        ctx.addIssue({
-          path: ["Quantity"],
-          message: "please type a valid quantity",
-        });
-      }
+      const fieldsToValidate = [
+        { field: "Options", message: "Please choose one of the options" },
+        { field: "BoardType", message: "Please choose the board type" },
+        {
+          field: "Quantity",
+          message: "Please fill in the quantity field",
+          validate: (val) => val === undefined || val < 0,
+        },
+      ];
+
+      fieldsToValidate.forEach(({ field, message, validate }) => {
+        const value = data[field];
+        if (validate ? validate(value) : !value) {
+          ctx.addIssue({
+            path: [field],
+            message,
+          });
+        }
+      });
+
       if (!data.PayAttention) {
         ctx.addIssue({
           path: ["PayAttention"],
-          message: "please fill the PayAttention field",
+          message: "Please fill in the PayAttention field",
         });
       } else {
-        if (data.PayAttention.ContainesSenstiveComponents === undefined) {
-          ctx.addIssue({
-            path: ["PayAttention", "ContainesSenstiveComponents"],
-            message: "please indicate if there are sensitive components",
-          });
-        }
-        if (data.PayAttention.AcceptAlternativesMadeInChina === undefined) {
-          ctx.addIssue({
-            path: ["PayAttention", "AcceptAlternativesMadeInChina"],
+        const payAttentionFields = [
+          {
+            field: "ContainsSensitiveComponents",
+            message: "Please indicate if there are sensitive components",
+          },
+          {
+            field: "AcceptAlternativesMadeInChina",
             message:
-              "please indicate if alternatives made in China are acceptable",
-          });
-        }
+              "Please indicate if alternatives made in China are acceptable",
+          },
+        ];
+
+        payAttentionFields.forEach(({ field, message }) => {
+          if (data.PayAttention[field] === undefined) {
+            ctx.addIssue({
+              path: ["PayAttention", field],
+              message,
+            });
+          }
+        });
       }
     }
   });

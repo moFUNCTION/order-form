@@ -30,6 +30,7 @@ export const Assemply_Service = ({
   return (
     <AccordionItem>
       {({ isExpanded }) => {
+        setValue("AssemplyServices.isEnabled", isExpanded);
         return (
           <>
             <AccordionButton>
@@ -64,7 +65,12 @@ export const Assemply_Service = ({
                 register={register}
                 control={control}
               />
-              <CustomizesServices />
+              <CustomizesServices
+                name="AssemplyServices.CustomizesServices"
+                register={register}
+                control={control}
+                setValue={setValue}
+              />
               <Detailed_information_of_assembly />
 
               <Text borderRadius="md" size="sm" p="4" bgColor="blue.50">

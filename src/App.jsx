@@ -12,6 +12,7 @@ const StandardCategoryForm = lazy(() =>
 const AssemplyCategoryForm = lazy(() =>
   import("./Pages/Order/CustomizationForm/Catgeories/Assemply/Index")
 );
+const OrderRequistForm = lazy(() => import("./Pages/Order/OrderRequist/Index"));
 function App() {
   return (
     <>
@@ -25,6 +26,14 @@ function App() {
             </LazyPageWrapper>
           }
         >
+          <Route
+            path="request/:category"
+            element={
+              <LazyPageWrapper>
+                <OrderRequistForm />
+              </LazyPageWrapper>
+            }
+          />
           <Route
             index
             element={<Navigate to="/order/customization-form" replace />}
@@ -62,7 +71,6 @@ function App() {
               }
             />
           </Route>
-          <Route path="request" />
         </Route>
       </Routes>
     </>

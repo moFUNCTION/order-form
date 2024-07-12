@@ -14,10 +14,10 @@ import { useWatch } from "react-hook-form";
 export const PayAttention = ({ setValue, control, name, register }) => {
   const ContainesSenstiveComponents = useWatch({
     control,
-    name: `${name}.ContainesSenstiveComponents`,
+    name: `${name}.ContainsSenstiveComponents`,
   });
   const HandleChangeContainesSenstiveComponents = (value) =>
-    setValue(`${name}.ContainesSenstiveComponents`, value);
+    setValue(`${name}.ContainsSenstiveComponents`, value);
   const AcceptAlternativesMadeInChina = useWatch({
     control,
     name: `${name}.AcceptAlternativesMadeInChina`,

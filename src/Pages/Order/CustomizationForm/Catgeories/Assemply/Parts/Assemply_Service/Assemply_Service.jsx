@@ -8,6 +8,7 @@ import { Quantity } from "./Parts/Quantity";
 import { PayAttention } from "./Parts/PayAttention";
 import { Detailed_information_of_assembly } from "./Parts/Detailed_information_of_assembly";
 import { OtherParams } from "./Parts/OtherParams/OtherParams";
+import { CustomizesServices } from "../../../Standard/Parts/Assemply_Service/Parts/CustomizesServices/CustomizesServices";
 
 export const Assemply_Service = ({
   formState: {
@@ -47,8 +48,19 @@ export const Assemply_Service = ({
           control={control}
           register={register}
         />
+        <OtherParams
+          name="AssemplyServices.OtherParams"
+          register={register}
+          control={control}
+        />
+        <CustomizesServices
+          name="AssemplyServices.CustomizesServices"
+          register={register}
+          control={control}
+          setValue={setValue}
+        />
         <Detailed_information_of_assembly />
-        <OtherParams />
+
         <Text borderRadius="md" size="sm" p="4" bgColor="blue.50">
           Price does not include PCB fabrication or the cost of components,
           exact quotation will be updated after all the files you uploaded pass
